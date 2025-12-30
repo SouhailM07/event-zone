@@ -7,7 +7,8 @@ Welcome back! Please enter your details.
 <form class="mt-6 space-y-5" method="POST" action="{{ route('login') }}">
 @csrf
 <!-- EMAIL -->
-    <x-atoms.input icon="envelope" label="Email" type="email" placeholder="example@gmail.com" value=""/>
+    <x-atoms.input icon="envelope" name="email" label="Email" type="email" placeholder="example@gmail.com"  
+/>
     <x-atoms.input icon="lock-closed" label="Password" type="password" name="password" required placeholder="Your Password"/>
                     <!-- OPTIONS -->
                     <div class="flex items-center justify-between text-sm">

@@ -39,12 +39,12 @@
 
         <!-- RIGHT FORM SECTION -->
         <section class="flex items-center justify-center p-10">
-            <article class="w-full max-w-md">
+            <article class="w-full  max-w-md">
                     {{-- form --}}
                     {{ $slot }}
                     {{-- form --}}
                     <!-- SOCIAL LOGIN -->
-                    <div class="pt-4">
+                    <div class="pt-2">
                         <div class="relative text-center">
                             <span class="text-xs text-gray-400 bg-white px-3">
                                 Or continue with
