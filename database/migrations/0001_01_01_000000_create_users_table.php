@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('email_verified')->default(false);
+            $table->boolean('account_verified')->default(false);
+            $table->boolean('oauth')->default(false);
+            $table->string('oauth_provider')->nullable();
             $table->string('password');
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

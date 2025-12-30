@@ -11,17 +11,26 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'oauth',
+        'oauth_provider',
+        'role_id',
+        'email_verified',
+        "account_verified"
+    ];
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+
+    // protected $casts = [
+    //     'oauth' => 'boolean',
+    //     'email_verified' => 'boolean',
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,5 +53,42 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+     // 🔗 Global role
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    // 🎟 Tickets bought by user
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    // 🧾 Logs created by user
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'actor_id');
+    }
+
+    // 🚨 Reports submitted by user
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    // 👥 Groups user belongs to
+
+    // 👑 Groups user owns
+    // public function ownedGroups()
+    // {
+    //     return $this->hasMany(Group::class, 'owner_id');
+    // }
+
+    // 🎉 Events created directly by user
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'created_by');
     }
 }
