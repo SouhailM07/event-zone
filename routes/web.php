@@ -15,7 +15,8 @@ Route::get('/logout', function () {
 })->name('logout');
 
 // Register Route
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::view("/register","login");
+// Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 // Logout Route
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
