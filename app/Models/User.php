@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -67,9 +67,9 @@ class User extends Authenticatable
     }
 
     // 🧾 Logs created by user
-    public function logs()
+    public function ActivityLogs()
     {
-        return $this->hasMany(Log::class, 'actor_id');
+        return $this->hasMany(ActivityLog::class, 'actor_id');
     }
 
     // 🚨 Reports submitted by user

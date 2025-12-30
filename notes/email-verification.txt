@@ -1,0 +1,36 @@
+1- Add 
+- $table->timestamp('email_verified_at')->nullable(); in users table
+- class User extends Authenticatable implements MustVerifyEmail -> MustVerifyEmail is needed
+================
+
+2- get env keys
+================
+MAIL_MAILER=smtp
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+
+================
+
+/*=============================================================================================*/
+/* email verification routes */
+/*=============================================================================================*/
+// ! 1 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+// ! 2
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+// ! 3
+    Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+4- use this to protected routes
+Route::view('/','home')->name("home")->middleware('verified');
