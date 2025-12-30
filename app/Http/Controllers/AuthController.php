@@ -31,7 +31,6 @@ class AuthController extends Controller
         return redirect('login');
     }
 
-
     public function logout(Request $request)
     {
         Auth::logout();
@@ -42,8 +41,26 @@ class AuthController extends Controller
         return redirect()->route('logout');
     }
 
-    public function profile(){
+    public function profile()
+    {
         $user = Auth::user();
         return view('auth.profile', compact('user'));
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        $request->validate([
+            'name'  => 'required|string',
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
+        ]);
+
+        $user = auth()->user();
+
+        $user->update([
+            'name'  => $request->name,
+            'email' => $request->email,
+        ]);
+        
+        return redirect()->route('profile')->with('success', 'Account updated successfully');
     }
 }

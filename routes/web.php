@@ -23,3 +23,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'profile'])
 ->name('profile')
 ->middleware('auth');
+
+Route::post('profile/update', [AuthController::class, 'updateProfile'])
+->name('profile.update')
+->middleware('auth');
