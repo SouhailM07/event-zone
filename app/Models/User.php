@@ -19,6 +19,7 @@ class User extends Authenticatable
         'oauth_provider',
         'role_id',
         'email_verified',
+        "account_verified"
     ];
     /**
      * The attributes that are mass assignable.
@@ -78,16 +79,12 @@ class User extends Authenticatable
     }
 
     // 👥 Groups user belongs to
-    public function groupMemberships()
-    {
-        return $this->hasMany(GroupMember::class);
-    }
 
     // 👑 Groups user owns
-    public function ownedGroups()
-    {
-        return $this->hasMany(Group::class, 'owner_id');
-    }
+    // public function ownedGroups()
+    // {
+    //     return $this->hasMany(Group::class, 'owner_id');
+    // }
 
     // 🎉 Events created directly by user
     public function events()

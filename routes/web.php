@@ -14,7 +14,7 @@ Route::get('/logout', function () {
     return "You Loged Out";
 })->name('logout');
 
-// Rigester Route
+// Register Route
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 // Logout Route
