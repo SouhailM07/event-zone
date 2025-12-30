@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\PasswordResetController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoogleController;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
 Route::view('/','home')->name("home")->middleware('verified');
 
-Route::get('/logout', AuthController::class.'logout')->name('logout');
+Route::get('/logout', [AuthController::class, 'logout']);
+
 
 // Register Route
 Route::view("/login","login")->name('login');
@@ -22,6 +24,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'profile'])
 ->name('profile')
 ->middleware('auth');
+
+/*=============================================================================================*/
+/* oauth routes */
+/*=============================================================================================*/
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 /*=============================================================================================*/
 /* email verification routes */

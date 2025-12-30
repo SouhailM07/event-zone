@@ -53,9 +53,9 @@
                         </div>
 
                         <div class="flex justify-center gap-3 mt-4">
-                            <button class="border rounded-lg px-4 w-full py-2 text-sm hover:bg-gray-100">
+                            <a href="{{route("google.login")  }}" class="border rounded-lg px-4 w-full py-2 text-sm hover:bg-gray-100">
                                 Google
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </form>
