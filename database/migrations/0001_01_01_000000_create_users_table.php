@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('account_verified')->default(false);
             $table->boolean('oauth')->default(false);
             $table->string('oauth_provider')->nullable();
+            $table->string("avatar")->default('/images/default-avatar.png');
             $table->string('password');
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
             $table->rememberToken();

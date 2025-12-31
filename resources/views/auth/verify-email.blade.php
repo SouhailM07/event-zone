@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+<div class="  min-h-screen flex items-center justify-center bg-gray-100 px-4">
     <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-6 space-y-6">
 
         {{-- Title --}}

@@ -1,0 +1,26 @@
+@php
+    $navItems = [
+        ["label" => "Home", "url" => "/", "icon" => "home"],
+        ["label" => "My Tickets", "url" => "/profile", "icon" => "ticket"],
+        ["label" => "My Favorite Events", "url" => "/profile", "icon" => "bookmark"],
+        ["label" => "Settings", "url" => "/settings", "icon" => "cog-6-tooth"],
+    ];
+    $currentRoute = request()->path();
+@endphp
+<aside class="min-w-[5rem] flex flex-col justify-between items-center pb-[1rem] drop-shadow-2xl bg-white h-screen top-0 sticky">
+    <div>
+        <img src={{asset("images/logo.png")}} alt="logo" height="120" width="120" class="size-[5rem] object-fill"/>
+        <ul class="">
+            @foreach ($navItems as $navItem)
+            <li class="relative">
+                <a href="{{ $navItem['url'] }}" @class(["bg-indigo-500 text-white"=>$navItem['url']==$currentRoute,"flex flex-col items-center py-4 hover:bg-gray-200"])>
+                    <x-dynamic-component :component="'heroicon-o-'.$navItem['icon']" class="w-6 h-6"/>
+                </a>
+            </li>
+            @endforeach
+        </ul>
+            </div>
+            <a href="#" class="bg-indigo-500 text-white w-4/5 aspect-square rounded-xl flex flex-col items-center flexCenter hover:bg-gray-200">
+                <x-heroicon-o-plus class="size-[1.8rem]"/>
+            </a>
+</aside>

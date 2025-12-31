@@ -7,18 +7,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
-Route::view('/','home')->name("home")->middleware('verified');
+Route::view('/','home')->name("home");
 
-Route::get('/logout', [AuthController::class, 'logout']);
-
-
-// Register Route
-Route::view("/login","login")->name('login');
-Route::view("/register","register")->name("register");
+// ! login
+Route::view("/login","auth.login")->name('login');
 Route::post('/login', [AuthController::class, 'handle_login']);
-// Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+// ! register
 Route::post('/register', [AuthController::class, 'register']);
-// Logout Route
+Route::view("/register","auth.register")->name("register");
+// ! logout
+Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [AuthController::class, 'profile'])
@@ -28,6 +26,7 @@ Route::get('/profile', [AuthController::class, 'profile'])
 /*=============================================================================================*/
 /* oauth routes */
 /*=============================================================================================*/
+// ! google
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
@@ -45,7 +44,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 // ! 3
-    Route::post('/email/verification-notification', function (Request $request) {
+Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
  
     return back()->with('message', 'Verification link sent!');
@@ -55,20 +54,14 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 /*=============================================================================================*/
 /* password reset routes */
 /*=============================================================================================*/
+Route::middleware('guest')->group(function () {
 
 Route::get('/forgot-password', [PasswordResetController::class, 'create'])
-    ->middleware('guest')
     ->name('password.request');
-
 Route::post('/forgot-password', [PasswordResetController::class, 'store'])
-    ->middleware('guest')
     ->name('password.email');
-
 Route::get('/reset-password/{token}', [PasswordResetController::class, 'edit'])
-    ->middleware('guest')
     ->name('password.reset');
-
 Route::post('/reset-password', [PasswordResetController::class, 'update'])
-    ->middleware('guest')
     ->name('password.update');
-
+});
