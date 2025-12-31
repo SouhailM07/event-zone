@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -45,11 +46,6 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function profile()
-    {
-        $user = Auth::user();
-        return view('auth.profile', compact('user'));
-    }
     public function handle_login(Request $req){
         $validatedData=$req->validate([
             'email'=>"required|email",
@@ -68,16 +64,26 @@ class AuthController extends Controller
     {
         $request->validate([
             'name'  => 'required|string',
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'avatar'=>"nullable|image|max:2048",
         ]);
 
         $user = auth()->user();
-
+        $userAvatar=$user->avatar;
+        if($request->hasFile("avatar")){
+            // delete old avatar if exists
+            if($user->avatar && Storage::disk('public')->exists($user->avatar)){
+                Storage::disk('public')->delete($user->avatar);
+            }
+            // upload new one
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $userAvatar='storage/'.$avatarPath;
+        }
         $user->update([
             'name'  => $request->name,
-            'email' => $request->email,
+            'avatar'=> $userAvatar,
         ]);
-        
+        // ! search if needed
+        // $user->save();
         return redirect()->route('profile')->with('success', 'Account updated successfully');
     }
 }

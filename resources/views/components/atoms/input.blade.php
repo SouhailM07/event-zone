@@ -13,7 +13,8 @@
         class="translate-x-2 absolute w-5 h-5 text-gray-500"
     />
 @endif
-    <input 
+    <input
+    {{$attributes}} 
     :type="show ? 'text' : '{{ $type }}'"
     {{-- type="{{ $type }}" --}}
     name="{{ $name }}"

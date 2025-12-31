@@ -3,7 +3,7 @@
         ["label" => "Home", "url" => "/", "icon" => "home"],
         ["label" => "My Tickets", "url" => "/profile", "icon" => "ticket"],
         ["label" => "My Favorite Events", "url" => "/profile", "icon" => "bookmark"],
-        ["label" => "Settings", "url" => "/settings", "icon" => "cog-6-tooth"],
+        ["label" => "Inventory", "url" => "/inventory", "icon" => "squares-2x2"],
     ];
     $currentRoute = request()->path();
 @endphp
@@ -20,7 +20,7 @@
             @endforeach
         </ul>
             </div>
-            <a href="#" class="bg-indigo-500 text-white w-4/5 aspect-square rounded-xl flex flex-col items-center flexCenter hover:bg-gray-200">
+            <a href="{{route('events.new')}}" class="bg-indigo-500 text-white w-4/5 aspect-square rounded-xl flex flex-col items-center flexCenter hover:bg-gray-200">
                 <x-heroicon-o-plus class="size-[1.8rem]"/>
             </a>
 </aside>

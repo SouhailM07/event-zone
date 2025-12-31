@@ -18,8 +18,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'oauth',
         'oauth_provider',
         'role_id',
-        'email_verified',
-        "account_verified"
+        'email_verified_at',
+        "account_verified",
+        "avatar"
     ];
     /**
      * The attributes that are mass assignable.

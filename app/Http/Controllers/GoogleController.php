@@ -29,7 +29,7 @@ class GoogleController extends Controller
         'password' => bcrypt(uniqid()), // or null if password is nullable
         'email_verified_at' => now(),
         'role_id' => $userRole->id,                 // choose default role id
-        //         'avatar' => $googleUser->getAvatar(),
+        'avatar' => $googleUser->getAvatar(),
 
     ]
             );

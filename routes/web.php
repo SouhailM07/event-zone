@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
 Route::view('/','home')->name("home");
+Route::view('/events/new','new-event')->middleware(['auth','verified'])->name('events.new');
 
 // ! login
 Route::view("/login","auth.login")->name('login');
@@ -19,7 +20,7 @@ Route::view("/register","auth.register")->name("register");
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/profile', [AuthController::class, 'profile'])
+Route::view('/profile', "user-profile")
 ->name('profile')
 ->middleware('auth');
 
@@ -65,6 +66,6 @@ Route::get('/reset-password/{token}', [PasswordResetController::class, 'edit'])
 Route::post('/reset-password', [PasswordResetController::class, 'update'])
     ->name('password.update');
 });
-Route::post('profile/update', [AuthController::class, 'updateProfile'])
+Route::put('profile/update', [AuthController::class, 'profileUpdate'])
 ->name('profile.update')
 ->middleware('auth');
