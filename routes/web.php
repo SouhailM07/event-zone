@@ -65,3 +65,6 @@ Route::get('/reset-password/{token}', [PasswordResetController::class, 'edit'])
 Route::post('/reset-password', [PasswordResetController::class, 'update'])
     ->name('password.update');
 });
+Route::post('profile/update', [AuthController::class, 'updateProfile'])
+->name('profile.update')
+->middleware('auth');
