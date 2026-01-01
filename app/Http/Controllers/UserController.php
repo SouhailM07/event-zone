@@ -15,13 +15,6 @@ class UserController extends Controller
         return view("admin.users-admin",["users"=>$users,"roles"=>$roles]);
     }
 
-    public function changeUserRole(Request $req){
-        $userData=$req->only(['userId','roleId']);
-        $user=User::find($userData['userId']);
-        $user->role_id=$userData['roleId'];
-        $user->save();
-        return redirect()->back();
-    }
     public function toggleVerifyUser(Request $req){
         $userId=$req->input('userId');
         $user=User::find($userId);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -33,7 +34,7 @@ Route::group(["prefix"=>"/admin-panel"],function(){
     Route::get('users',[UserController::class,'getUsers'])->name('admin.users');
     Route::put('verify-user',[UserController::class,'toggleVerifyUser'])->name('verify.user');
     Route::put('ban-user',[UserController::class,'toggleBanUser'])->name('ban.user');
-    Route::put('change-user-role',[UserController::class,'changeUserRole'])->name('change.user.role');
+    Route::put('change-user-role',[RoleController::class,'changeUserRole'])->name('change.user.role');
     Route::delete('delete-user',[UserController::class,'deleteUser'])->name('delete.user');
 });
 /*=============================================================================================*/
