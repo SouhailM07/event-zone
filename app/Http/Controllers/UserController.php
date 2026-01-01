@@ -15,6 +15,8 @@ class UserController extends Controller
         return view("admin.users-admin",["users"=>$users,"roles"=>$roles]);
     }
 
+    
+    // 
     public function toggleVerifyUser(Request $req){
         $userId=$req->input('userId');
         $user=User::find($userId);

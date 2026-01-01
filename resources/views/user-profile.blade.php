@@ -17,10 +17,15 @@
         <x-atoms.input name="name" value="{{auth()->user()->name}}" label="Name"/>
             <div class="flexBetween">
                 <p>Account Verified :</p>
-                @if(!auth()->user()->email_verified_at)
+                @if(auth()->user()->account_verified)
                 <span class="bg-emerald-500 text-white w-[10rem] h-[2.8rem] flexCenter rounded">Verified</span>
                 @else
-                <a class="bg-red-500 text-white w-[10rem] h-[2.8rem] flexCenter rounded">Verify Account</a>
+                <x-molecules.dialog modelId="verify-account-modal" title="Verify Your Account">
+                    <x-slot:trigger>
+                        <button type="button" data-modal-target="verify-account-modal" data-modal-toggle="verify-account-modal" class="bg-red-500 text-white w-[10rem] h-[2.8rem] flexCenter rounded">Verify Account</button>
+                    </x-slot:trigger>
+                    Reach Us through those contacts to verify your account.
+                </x-molecules.dialog>
                 @endif
             </div>
             <div class="flexBetween">

@@ -7,7 +7,7 @@
 <div data-popover id="popover-default" role="tooltip" class="absolute z-10 invisible inline-block w-72 text-sm text-body transition-opacity duration-300 bg-neutral-primary-soft border border-default rounded-base shadow-xs opacity-0">
     <div class="px-3 flexBetween py-2 bg-neutral-tertiary border-b border-default rounded-t-base">
         <h3 class="font-medium text-heading">{{auth()->user()->name}}</h3>
-        @if(auth()->user()->verified_at)
+        @if(auth()->user()->account_verified)
         <span class="text-sm text-green-600 flex items-center gap-1">
             <x-heroicon-o-shield-check class="size-4 inline text-green-600"/>
             Verified User

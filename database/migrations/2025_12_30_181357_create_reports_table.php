@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId("userId")->constrained("users")->cascadeOnDelete();
+            $table->text("reason");
+            $table->foreignId("eventId")->constrained("events")->cascadeOnDelete();
+            $table->boolean("isResolved")->default(false);
         });
     }
 

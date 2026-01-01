@@ -1,5 +1,6 @@
 @php
     $userId=request('userId');
+    $search=request('search');
 @endphp
 <x-templates.admin-template>
 <main class="p-[1rem]">
@@ -104,16 +105,15 @@
         @endif
         <article class="flex flex-col gap-[1rem]">
             <form action="{{route('admin.users')}}" method="GET" class="grid grid-cols-[1fr_6rem] gap-2 ">
-                
-                <x-atoms.input icon="magnifying-glass" class="min-w-full rounded!" placeholder="search user by name" /> <button class="bg-gray-400 py-2 px-[1rem] rounded">Search</button>
+                <x-atoms.input name="search" value={{$search}} icon="magnifying-glass" class="min-w-full rounded!" placeholder="search user by name" /> <button class="bg-gray-400 py-2 px-[1rem] rounded">Search</button>
             </form>
             <ul class="grid grid-cols-3  gap-[1rem] h-full items-start">
-                @foreach($users as $index=>$user )
+                @foreach($users as $index=>$user)
+                @if(!$search || str_contains(strtolower($user['name']),strtolower($search)))
                 <li>
                     <a href={{"/admin-panel/users?userId=".$user['id']}} 
                     @class(["bg-red-500! text-white "=>$user['is_banned']," flex text-start w-full cursor-pointer items-center gap-4 bg-white rounded border p-2 border-gray-400"])
                     >
-                    
                             <img 
                             src="{{$user['avatar']}}"
                             class="size-[3.8rem] p-1 bg-gray-200 rounded-full" alt="logo"/>
@@ -123,6 +123,7 @@
                             </div>
                     </a>
                 </li>
+                @endif
                 @endforeach
             </ul>
 <div class="mt-4">
