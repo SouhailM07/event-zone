@@ -18,6 +18,7 @@
                 </a>
             </li>
             @endforeach
+            @auth
             @if(auth()->user()->role->name=='admin')
             <li class="relative">
                 <a href="/admin-panel/users" @class(["flex flex-col items-center py-4 hover:bg-gray-200 bg-red-500 text-white"])>
@@ -25,6 +26,7 @@
                 </a>
             </li>
             @endif
+            @endauth
         </ul>
             </div>
             <a href="{{route('events.new')}}" class="bg-indigo-500 text-white w-4/5 aspect-square rounded-xl flex flex-col items-center flexCenter hover:bg-gray-200">

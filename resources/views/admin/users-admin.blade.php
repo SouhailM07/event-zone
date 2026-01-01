@@ -112,7 +112,7 @@
                 @if(!$search || str_contains(strtolower($user['name']),strtolower($search)))
                 <li>
                     <a href={{"/admin-panel/users?userId=".$user['id']}} 
-                    @class(["bg-red-500! text-white "=>$user['is_banned']," flex text-start w-full cursor-pointer items-center gap-4 bg-white rounded border p-2 border-gray-400"])
+                    @class(["bg-indigo-500! text-white"=>$userId==$user['id'],"bg-red-500! text-white "=>$user['is_banned']," flex text-start w-full cursor-pointer items-center gap-4 bg-white rounded border p-2 border-gray-400"])
                     >
                             <img 
                             src="{{$user['avatar']}}"

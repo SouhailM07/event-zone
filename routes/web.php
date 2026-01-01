@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GlobalDataController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -12,6 +13,8 @@ use Illuminate\Http\Request;
 Route::view('/','home')->name("home");
 Route::view('/events/new','new-event')->middleware(['auth','verified'])->name('events.new');
 
+// 
+Route::view('/banned','banned-page');
 // ! login
 Route::view("/login","auth.login")->name('login');
 Route::post('/login', [AuthController::class, 'handle_login']);
@@ -31,6 +34,10 @@ Route::view('/profile', "user-profile")
 /*=============================================================================================*/
 Route::group(["prefix"=>"/admin-panel"],function(){
     Route::view('dashboard',"admin.dashboard-admin");
+    Route::view('events',"admin.events-admin")->name('admin.events');
+    Route::view("reports","admin.reports-admin")->name('admin.reports');
+    Route::get('globals',[GlobalDataController::class,"getGlobalData"])->name('admin.globals');
+    Route::put('globals',[GlobalDataController::class,"updateGlobalData"])->name('admin.globals.update');
     Route::get('users',[UserController::class,'getUsers'])->name('admin.users');
     Route::put('verify-user',[UserController::class,'toggleVerifyUser'])->name('verify.user');
     Route::put('ban-user',[UserController::class,'toggleBanUser'])->name('ban.user');
