@@ -20,7 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'role_id',
         'email_verified_at',
         "account_verified",
-        "avatar"
+        "avatar",
+        'is_banned',
     ];
     /**
      * The attributes that are mass assignable.

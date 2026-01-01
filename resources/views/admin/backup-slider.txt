@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Draggable Nav</title>
+<style>
+  /* Hide default scrollbar */
+  #navContainer::-webkit-scrollbar {
+    display: none;
+  }
+  #navContainer {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+</style>
+</head>
+<body class="flex justify-center items-center h-screen bg-gray-100">
+
+<div id="navContainer" class="overflow-x-auto flex gap-4 cursor-grab border border-gray-300 rounded-xl p-4 select-none">
+  <div class="flex gap-4" id="nav">
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">Home</span>
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">About</span>
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">Services</span>
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">Portfolio</span>
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">Blog</span>
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">Contact</span>
+    <span class="px-4 py-2 bg-gray-200 rounded-lg whitespace-nowrap">FAQ</span>
+  </div>
+</div>
+
+<script>
+const slider = document.getElementById('navContainer');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener('mousedown', (e) => {
+  isDown = true;
+  slider.classList.add('cursor-grabbing');
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
+  slider.classList.remove('cursor-grabbing');
+});
+
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  slider.classList.remove('cursor-grabbing');
+});
+
+slider.addEventListener('mousemove', (e) => {
+  if(!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - slider.offsetLeft;
+  const walk = (x - startX) * 2; // scroll-fast
+  slider.scrollLeft = scrollLeft - walk;
+});
+</script>
+
+</body>
+</html>

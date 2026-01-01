@@ -76,7 +76,7 @@ class AuthController extends Controller
             }
             // upload new one
             $avatarPath = $request->file('avatar')->store('avatars', 'public');
-            $userAvatar='storage/'.$avatarPath;
+            $userAvatar='/storage/'.$avatarPath;
         }
         $user->update([
             'name'  => $request->name,

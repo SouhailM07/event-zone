@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("avatar")->default('/images/default-avatar.png');
             $table->string('password');
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->boolean('is_banned')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
