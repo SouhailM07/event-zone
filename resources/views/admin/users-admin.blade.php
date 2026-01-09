@@ -7,7 +7,7 @@
     <section class="grid [height:calc(100vh-8rem)] gap-[1rem] grid-cols-[1fr_3fr]">
         @if($userId)
         @php
-            $selectedUser=$users->where('id',$userId)->first();
+        $selectedUser = \App\Models\User::find($userId);
         @endphp
         <article class=" border border-gray-400 rounded-md row-span-full items-center justify-between flex-col flex p-2">
             <div class="w-full space-y-[2rem] ">

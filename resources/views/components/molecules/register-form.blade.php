@@ -63,7 +63,7 @@ Welcome back! Please enter your details.
                                         <!-- SIGN UP -->
                     <p class="text-center text-sm text-gray-500">
                         Have an account?
-                        <a href="#" class="text-blue-600 font-medium hover:underline">
+                        <a href="/login" class="text-blue-600 font-medium hover:underline">
                             Sign In
                         </a>
                     </p>

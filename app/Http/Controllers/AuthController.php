@@ -51,7 +51,11 @@ class AuthController extends Controller
             'email'=>"required|email",
             'password'=>"required|min:8"
         ]);
-    if(Auth::attempt($validatedData)){
+
+        // ! for making the session long , it's happened automatically;
+        $remember=$req->has('remember');
+
+    if(Auth::attempt($validatedData,$remember)){
         $req->session()->regenerate();
         return redirect('/');
     }else{

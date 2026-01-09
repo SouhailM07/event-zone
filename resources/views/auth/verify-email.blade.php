@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <x-atoms.metall title="verify email"/>
+    <x-atoms.tailwindcss/>
+</head>
+<body>
+    
 <div class="  min-h-screen flex items-center justify-center bg-gray-100 px-4">
     <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-6 space-y-6">
 
@@ -26,7 +34,7 @@
                 @csrf
                 <button
                     type="submit"
-                    class="w-full py-2 px-4 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+                    class="w-full py-2 px-4 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-blue-700 transition"
                 >
                     Resend Verification Email
                 </button>
@@ -46,3 +54,6 @@
 
     </div>
 </div>
+
+</body>
+</html>

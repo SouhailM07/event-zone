@@ -53,8 +53,9 @@
                         </div>
 
                         <div class="flex justify-center gap-3 mt-4">
-                            <a href="{{route("google.login")  }}" class="border rounded-lg px-4 w-full py-2 text-sm hover:bg-gray-100">
-                                Google
+                            <a href="{{route("google.login")  }}" class="grid grid-cols-[2rem_1fr_2rem] items-center  border rounded-lg px-4 w-full py-2 text-sm hover:bg-gray-100">
+                                <img src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="logo" class="size-[2rem]"/>
+                                <span class="w-full text-center">Google</span>
                             </a>
                         </div>
                     </div>

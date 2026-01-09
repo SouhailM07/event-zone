@@ -13,11 +13,11 @@ Welcome back! Please enter your details.
                     <!-- OPTIONS -->
                     <div class="flex items-center justify-between text-sm">
                         <label class="flex items-center gap-2">
-                            <input type="checkbox" class="rounded text-blue-600">
+                            <input name="remember" type="checkbox" class="rounded text-blue-600">
                             Remember me
                         </label>
 
-                        <a href="#" class="text-blue-600 hover:underline">
+                        <a href="/forgot-password" class="text-blue-600 hover:underline">
                             Forgot password?
                         </a>
                     </div>
@@ -32,7 +32,7 @@ Welcome back! Please enter your details.
                     <!-- SIGN UP -->
                     <p class="text-center text-sm text-gray-500">
                         Don’t have an account?
-                        <a href="#" class="text-blue-600 font-medium hover:underline">
+                        <a href="/register" class="text-blue-600 font-medium hover:underline">
                             Sign Up
                         </a>
                     </p>
