@@ -91,6 +91,6 @@ class User extends Authenticatable implements MustVerifyEmail
     // 🎉 Events created directly by user
     public function events()
     {
-        return $this->hasMany(Event::class, 'created_by');
+        return $this->hasMany(Event::class);
     }
 }

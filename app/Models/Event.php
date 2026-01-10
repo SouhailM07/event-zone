@@ -21,5 +21,10 @@ class Event extends Model
         'validation',
         'stated_at',
         'end_at',
+        "categoryId"
     ];
+
+    public function categories(){
+        return $this->hasMany(Category::class);
+    }
 }

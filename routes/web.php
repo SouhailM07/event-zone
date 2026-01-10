@@ -7,23 +7,34 @@ use App\Http\Controllers\GlobalDataController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
+/*=============================================================================================*/
+/* start routes */
+/*=============================================================================================*/
 Route::get('/',function(){
     $events=Event::all();
     return view('home')->with('events',$events);
 })->name("home");
+// 
 Route::get('/event/{id}',function($id){
     $event=Event::where('id',$id)->first();
     return view('view-event')->with('event',$event);
 })->name('events.show');
 // Route::view('/events/new','new-event')->middleware(['auth','verified'])->name('events.new');
 Route::middleware(['auth'])->group(function () {
-    Route::view('/events/new','new-event')->name('events.new');
+    Route::get('/events/new',[EventController::class,'create'])->name('events.new');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/inventory',[EventController::class,'viewInventory']);
+});
+// 
+Route::get('/categories',function(){
+    $categories=Category::all();
+    return view('categories',compact('categories'));
 });
 // 
 Route::view('/banned','banned-page');

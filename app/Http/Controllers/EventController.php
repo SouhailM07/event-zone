@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
+    public function viewInventory(){
+        $events=auth()->user()->events;
+        return view('inventory',compact('events'));
+    }
+
     public function create()
     {
-        return view('new-event'); // your Blade file
+                $categories=Category::all();
+        return view('new-event',compact('categories'));
     }
 public function store(Request $request)
 {
@@ -19,7 +26,7 @@ public function store(Request $request)
         'description' => 'required|string',
         'thumbnail' => 'nullable|image|max:2048',
         'location' => 'required|string|max:255',
-        'coordination' => 'required|string', // <-- added
+        'coordination' => 'required|string',
         'price' => 'required|integer|min:0',
         'quantity_type' => 'required|in:infinite,custom',
         'quantity' => 'nullable|integer|min:0',
@@ -42,10 +49,9 @@ public function store(Request $request)
 
     // Handle thumbnail
     if ($request->hasFile('thumbnail')) {
-        $file = $request->file('thumbnail');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('public/thumbnails', $filename);
-        $data['thumbnail'] = 'thumbnails/' . $filename;
+        $thumbnailPath = $request->file('thumbnail')->store("thumbnails",'public');
+        $data['thumbnail'] ='/storage/'.$thumbnailPath;
+        
     }
 
     Event::create($data);

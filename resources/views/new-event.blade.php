@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <x-atoms.metall title="new event"/>
+    <x-atoms.metall title="New Event"/>
     <x-atoms.tailwindcss/>
 </head>
 <body>
 <div class="max-w-5xl mx-auto px-6 py-8">
 
     <!-- Header -->
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex items-start justify-between mb-8">
         <div>
+            <a href="{{route('home')}}"
+               class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2">
+                <x-heroicon-o-arrow-left class="w-4 h-4"/>
+                Back
+            </a>
+
             <h1 class="text-2xl font-bold text-gray-900">Create New Event</h1>
             <p class="text-sm text-gray-500 mt-1">
                 Add a new event and publish it for users
@@ -18,7 +24,7 @@
     </div>
 
     <!-- Form -->
-    <form action="{{route('events.store')}}" method="POST" enctype="multipart/form-data"
+    <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data"
           class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 space-y-8">
         @csrf
 
@@ -30,6 +36,30 @@
                    placeholder="Music Festival 2024">
             @error('title') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
+
+        <!-- Category -->
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+        Event Categories
+    </label>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        @foreach($categories as $category)
+            <label class="flex items-center gap-2">
+                <input type="checkbox" 
+                       name="categories[]" 
+                       value="{{ $category->id }}"
+                       {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}
+                       class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                <span class="text-gray-700">{{ $category->name }}</span>
+            </label>
+        @endforeach
+    </div>
+
+    @error('categories')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+    @enderror
+</div>
 
         <!-- Description -->
         <div>
@@ -54,27 +84,32 @@
                        class="text-sm text-gray-600">
             </div>
         </div>
-<div class='grid grid-cols-2 gap-6'>
-    <!-- Location -->
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-        <input type="text" name="location" value="{{ old('location') }}"
-        class="w-full rounded-lg border-gray-300"
-        placeholder="Algiers, Algeria">
-    </div>
-    <!-- Coordination -->
-    <div>
-    <label class="block text-sm font-medium text-gray-700 mb-1">Coordinates (Latitude, Longitude)</label>
-    <input type="text" name="coordination" value="{{ old('coordination') }}"
-    class="w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-    placeholder="e.g., 36.7538, 3.0588">
-    @error('coordination') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-</div>
-</div>
+
+        <div class="grid grid-cols-2 gap-6">
+            <!-- Location -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                <input type="text" name="location" value="{{ old('location') }}"
+                       class="w-full rounded-lg border-gray-300"
+                       placeholder="Algiers, Algeria">
+            </div>
+
+            <!-- Coordinates -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Coordinates (Latitude, Longitude)
+                </label>
+                <input type="text" name="coordination" value="{{ old('coordination') }}"
+                       class="w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                       placeholder="36.7538, 3.0588">
+                @error('coordination')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
 
         <!-- Pricing & Quantity -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
             <!-- Price -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Price (DA)</label>
@@ -85,27 +120,28 @@
 
             <!-- Quantity -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Tickets Quantity</label>
-<div class="flex gap-4 items-center">
-    <div class="flex gap-4 mb-2">
-        <label class="flex items-center gap-2 text-sm">
-            <input type="radio" name="quantity_type" value="infinite" checked>
-            Infinite
-        </label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Tickets Quantity
+                </label>
+
+                <div class="flex gap-4 mb-2">
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="radio" name="quantity_type" value="infinite" checked>
+                        Infinite
+                    </label>
 
                     <label class="flex items-center gap-2 text-sm">
                         <input type="radio" name="quantity_type" value="custom">
                         Custom
                     </label>
                 </div>
-                
+
                 <input type="number" id="quantity" name="quantity"
-                class="w-full rounded-lg border-gray-300"
-                placeholder="Enter quantity"
-                >
+                       class="w-full rounded-lg border-gray-300"
+                       placeholder="Enter quantity">
             </div>
         </div>
-        </div>
+
         <!-- Dates -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -125,7 +161,6 @@
             </div>
         </div>
 
-        <!-- Hidden validation -->
         <input type="hidden" name="validation" value="pending">
 
         <!-- Submit -->
@@ -146,11 +181,9 @@
 
 <!-- JS -->
 <script>
-    // Thumbnail preview
     function previewThumbnail(event) {
         const preview = document.getElementById('thumbnailPreview');
         const icon = document.getElementById('thumbnailIcon');
-
         const file = event.target.files[0];
         if (!file) return;
 
@@ -163,7 +196,6 @@
         reader.readAsDataURL(file);
     }
 
-    // Quantity logic
     const priceInput = document.getElementById('price');
     const quantityInput = document.getElementById('quantity');
     const radios = document.querySelectorAll('input[name="quantity_type"]');

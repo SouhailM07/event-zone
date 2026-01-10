@@ -1,7 +1,15 @@
-<header class="bg-white  flex items-center h-[5rem] px-[1rem]  sticky top-0 ">
-<nav class="flex justify-between items-center w-full">
-    <div>
+<header class="bg-white  flex items-center h-[5rem] pr-[1rem]  sticky top-0 ">
+<nav class="flex justify-between items-center w-full gap-[1rem]">
+            <img src={{asset("images/logo.png")}} alt="logo" height="120" width="120" class="size-[5rem]  object-fill"/>
+    <div class="w-full grid grid-cols-[1fr_12rem] gap-[1rem]">
         {{-- for back btn --}}
+        <x-atoms.input class="w-full " icon="magnifying-glass" name="event_search" placeholder="search"/>
+                <select name="roleId" onchange="this.form.submit()" id="countries" class=" rounded-2xl px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand shadow-xs placeholder:text-body ">
+                    {{-- <option selected value={{$selectedUser['role_id']}}>{{$selectedUser['role']->name}}</option> --}}
+                    @foreach ($categories as $category)
+                    <option value={{$category['id']}}>{{$category['name']}}</option>
+                    @endforeach
+                </select>
     </div>
     <ul class="flex items-center gap-6">
         @auth

@@ -1,19 +1,19 @@
 @php
     $navItems = [
         ["label" => "Home", "url" => "/", "icon" => "home"],
+        ["label" => "Categories", "url" => "categories", "icon" => "tag"],
         ["label" => "My Tickets", "url" => "/profile", "icon" => "ticket"],
         ["label" => "My Favorite Events", "url" => "/profile", "icon" => "bookmark"],
         ["label" => "Inventory", "url" => "/inventory", "icon" => "squares-2x2"],
     ];
     $currentRoute = request()->path();
 @endphp
-<aside class="min-w-[5rem] flex flex-col justify-between items-center pb-[1rem] drop-shadow-2xl bg-white h-screen top-0 sticky">
-    <div>
-        <img src={{asset("images/logo.png")}} alt="logo" height="120" width="120" class="size-[5rem] object-fill"/>
-        <ul class="">
+<aside class="min-w-[5rem] flex flex-col justify-between items-center pb-[1rem] drop-shadow-2xl bg-white [height:calc(100vh-5rem)] top-20 sticky">
+    <div class=" w-full ">
+        <ul class="w-full ">
             @foreach ($navItems as $navItem)
-            <li class="relative">
-                <a href="{{ $navItem['url'] }}" @class(["bg-indigo-500 text-white"=>$navItem['url']==$currentRoute,"flex flex-col items-center py-4 hover:bg-gray-200"])>
+            <li class="relative w-full">
+                <a href="{{ $navItem['url'] }}" @class(["bg-indigo-500 text-white"=>$navItem['url']==$currentRoute,"flex flex-col items-center py-4 hover:bg-gray-200 min-w-full "])>
                     <x-dynamic-component :component="'heroicon-o-'.$navItem['icon']" class="w-6 h-6"/>
                 </a>
             </li>
