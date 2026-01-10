@@ -18,7 +18,8 @@ class GoogleController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            // stateless was removed
+            $googleUser = Socialite::driver('google')->user();
             $userRole=Role::where("name",'user')->first();
             $user = User::firstOrCreate(
                 ['email' => $googleUser->getEmail()],
@@ -37,8 +38,9 @@ class GoogleController extends Controller
             Auth::login($user);
 
             return redirect()->intended('/'); // or dashboard
-        } catch (\Exception $e) {
-            return redirect('/login')->with('error', 'Failed to login with Google');
-        }
+        }catch (\Exception $e) {
+    // dd($e->getMessage());
+            return redirect()->intended('/'); // or dashboard
+}
     }
 }

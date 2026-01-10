@@ -9,4 +9,17 @@ class Event extends Model
 {
     /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory;
+     protected $fillable = [
+        'title',
+        'description',
+        'thumbnail',
+        'location',
+        'userId',
+        'coordination',
+        'price',
+        'quantity',
+        'validation',
+        'stated_at',
+        'end_at',
+    ];
 }

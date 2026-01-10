@@ -1,4 +1,4 @@
-@props(["icon"=>"","type" => "text", "name" => "", "label"=>"","placeholder" => "","required" => false,"value" => "","class" => ""])
+@props(["icon"=>"","type" => "text", "name" => "", "label"=>"","placeholder" => "","required" => false,"value" => "","class" => "",'old'=>false])
 <div>
 
 @if($label)
@@ -18,7 +18,7 @@
     :type="show ? 'text' : '{{ $type }}'"
     {{-- type="{{ $type }}" --}}
     name="{{ $name }}"
-    value="{{$value}}"
+    value="{{ old($name, $value) }}"
     placeholder="{{ $placeholder }}"
     @class([
          'indent-[1.2rem]'=>$icon,

@@ -6,7 +6,8 @@ $inputs = [
         "type" => "text",
         "name" => "name",
         "required" => true,
-        "placeholder" => "Your Name"
+        "placeholder" => "Your Name",
+        "old"=>true
     ],
     [
         "icon" => "envelope",

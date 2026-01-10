@@ -1,13 +1,4 @@
-<x-templates.home-template title="home">
-<div class="flex h-[80vh] gap-[1rem]">
-                <div class="w-full">
-                    <img src="{{asset('images/auth.jpg')}}" class="h-[80vh] w-full rounded-md"/>
-                </div>
-                <div class="">
-                    <div   inline-datepicker data-date="02/25/2024"></div>
-                </div>
-            </div>
-            <div class="max-w-7xl mx-auto px-6 py-8">
+<div class="max-w-7xl mx-auto px-6 py-8">
 
     <!-- Section Title -->
     <h2 class="text-2xl font-bold text-gray-900 mb-6">Upcoming Events</h2>
@@ -52,5 +43,3 @@
         @endforelse
     </div>
 </div>
-
-</x-templates.home-template>

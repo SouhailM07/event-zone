@@ -2,17 +2,29 @@
 
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\GlobalDataController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
-Route::view('/','home')->name("home");
-Route::view('/events/new','new-event')->middleware(['auth','verified'])->name('events.new');
-
+Route::get('/',function(){
+    $events=Event::all();
+    return view('home')->with('events',$events);
+})->name("home");
+Route::get('/event/{id}',function($id){
+    $event=Event::where('id',$id)->first();
+    return view('view-event')->with('event',$event);
+})->name('events.show');
+// Route::view('/events/new','new-event')->middleware(['auth','verified'])->name('events.new');
+Route::middleware(['auth'])->group(function () {
+    Route::view('/events/new','new-event')->name('events.new');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+});
 // 
 Route::view('/banned','banned-page');
 // ! login
@@ -29,6 +41,9 @@ Route::view('/profile', "user-profile")
 ->name('profile')
 ->middleware('auth');
 
+Route::put('profile/update', [AuthController::class, 'profileUpdate'])
+->name('profile.update')
+->middleware('auth');
 /*=============================================================================================*/
 /* admin routes */
 /*=============================================================================================*/
@@ -84,6 +99,3 @@ Route::get('/reset-password/{token}', [PasswordResetController::class, 'edit'])
 Route::post('/reset-password', [PasswordResetController::class, 'update'])
     ->name('password.update');
 });
-Route::put('profile/update', [AuthController::class, 'profileUpdate'])
-->name('profile.update')
-->middleware('auth');

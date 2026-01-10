@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string("title");
+            $table->text('description');
+            $table->string("thumbnail")->default('');
+            $table->string('location');
+            $table->foreignId('userId')->constrained("users")->cascadeOnDelete();
+            $table->string('coordination');
+            $table->integer('price')->default(0);
+            $table->integer('quantity')->default(0);
+            $table->enum('validation',["pending","rejected",'approved']);
+            $table->dateTime('stated_at');
+            $table->dateTime('end_at')->nullable();
             $table->timestamps();
         });
     }
