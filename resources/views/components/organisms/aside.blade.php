@@ -2,9 +2,9 @@
     $navItems = [
         ["label" => "Home", "url" => "/", "icon" => "home"],
         ["label" => "Categories", "url" => "categories", "icon" => "tag"],
-        ["label" => "My Tickets", "url" => "/profile", "icon" => "ticket"],
-        ["label" => "My Favorite Events", "url" => "/profile", "icon" => "bookmark"],
-        ["label" => "Inventory", "url" => "/inventory", "icon" => "squares-2x2"],
+        ["label" => "My Tickets", "url" => "profile", "icon" => "ticket"],
+        ["label" => "My Favorite Events", "url" => "profile", "icon" => "bookmark"],
+        ["label" => "Inventory", "url" => "inventory", "icon" => "squares-2x2"],
     ];
     $currentRoute = request()->path();
 @endphp

@@ -29,14 +29,7 @@
         @csrf
 
         <!-- Title -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Event Title</label>
-            <input type="text" name="title" value="{{ old('title') }}"
-                   class="w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                   placeholder="Music Festival 2024">
-            @error('title') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-        </div>
-
+        <x-atoms.input label="Event Title" name="title" placeholder="Music Festival 2024" />
         <!-- Category -->
 <div>
     <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -62,103 +55,48 @@
 </div>
 
         <!-- Description -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <textarea name="description" rows="4"
-                      class="w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                      placeholder="Describe your event...">{{ old('description') }}</textarea>
-        </div>
-
+       <x-atoms.textarea name="description" rows="4" placeholder="Describe your event..." label="Description" /> 
         <!-- Thumbnail -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Event Thumbnail</label>
-
-            <div class="flex items-center gap-6">
-                <div class="w-32 h-32 rounded-lg border bg-gray-50 flex items-center justify-center overflow-hidden">
-                    <img id="thumbnailPreview" class="hidden w-full h-full object-cover">
-                    <x-heroicon-o-photo id="thumbnailIcon" class="w-10 h-10 text-gray-400"/>
-                </div>
-
-                <input type="file" name="thumbnail" accept="image/*"
-                       onchange="previewThumbnail(event)"
-                       class="text-sm text-gray-600">
-            </div>
-        </div>
-
+        <x-atoms.one-img-input name="thumbnail" label="Event Thumbnail" id="thumbnailPreview"/>
         <div class="grid grid-cols-2 gap-6">
-            <!-- Location -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                <input type="text" name="location" value="{{ old('location') }}"
-                       class="w-full rounded-lg border-gray-300"
-                       placeholder="Algiers, Algeria">
-            </div>
-
-            <!-- Coordinates -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Coordinates (Latitude, Longitude)
-                </label>
-                <input type="text" name="coordination" value="{{ old('coordination') }}"
-                       class="w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                       placeholder="36.7538, 3.0588">
-                @error('coordination')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+            <x-atoms.input name="location"  label="Location" placeholder="Algiers, Algeria" />
+            <x-atoms.input name="coordination"  label="Coordination" placeholder="36.7538, 3.0588" />
         </div>
 
         <!-- Pricing & Quantity -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Price -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Price (DA)</label>
-                <input type="number" id="price" name="price" min="0"
-                       value="{{ old('price', 0) }}"
-                       class="w-full rounded-lg border-gray-300">
-            </div>
-
+            <x-atoms.input name="price" type="number" min="0" label="Price (DA)" value="0"/>
             <!-- Quantity -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                     Tickets Quantity
                 </label>
+                <div class="flex gap-2 items-center">
 
-                <div class="flex gap-4 mb-2">
-                    <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="quantity_type" value="infinite" checked>
-                        Infinite
-                    </label>
-
-                    <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="quantity_type" value="custom">
-                        Custom
-                    </label>
+                    <div class="flex gap-4 mb-2">
+                        <label class="flex items-center gap-2 text-sm">
+                            <input type="radio" name="quantity_type" value="infinite" checked>
+                            Infinite
+                        </label>
+                        
+                        <label class="flex items-center gap-2 text-sm">
+                            <input type="radio" name="quantity_type" value="custom">
+                            Custom
+                        </label>
+                    </div>
+                    
+                    <input type="number" id="quantity" name="quantity"
+                    class="w-full rounded-lg border-gray-300"
+                    placeholder="Enter quantity">
                 </div>
-
-                <input type="number" id="quantity" name="quantity"
-                       class="w-full rounded-lg border-gray-300"
-                       placeholder="Enter quantity">
             </div>
-        </div>
+            </div>
 
         <!-- Dates -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Start Date & Time
-                </label>
-                <input type="datetime-local" name="stated_at"
-                       class="w-full rounded-lg border-gray-300">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    End Date & Time (Optional)
-                </label>
-                <input type="datetime-local" name="end_at"
-                       class="w-full rounded-lg border-gray-300">
-            </div>
+            <x-atoms.input type='datetime-local' name='started_at' label="Start Date & Time"/>
+            <x-atoms.input type='datetime-local' name='end_at' label="End Date & Time (Optional)" />
         </div>
 
         <input type="hidden" name="validation" value="pending">
@@ -181,21 +119,6 @@
 
 <!-- JS -->
 <script>
-    function previewThumbnail(event) {
-        const preview = document.getElementById('thumbnailPreview');
-        const icon = document.getElementById('thumbnailIcon');
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = () => {
-            preview.src = reader.result;
-            preview.classList.remove('hidden');
-            icon.classList.add('hidden');
-        };
-        reader.readAsDataURL(file);
-    }
-
     const priceInput = document.getElementById('price');
     const quantityInput = document.getElementById('quantity');
     const radios = document.querySelectorAll('input[name="quantity_type"]');

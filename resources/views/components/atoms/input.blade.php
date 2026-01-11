@@ -1,4 +1,4 @@
-@props(["icon"=>"","type" => "text", "name" => "", "label"=>"","placeholder" => "","required" => false,"value" => "","class" => "",'old'=>false])
+@props(["icon"=>"","type" => "text", "name" => "", "label"=>"","required" => false,"value" => "","class" => ""])
 <div>
 
 @if($label)
@@ -19,10 +19,9 @@
     {{-- type="{{ $type }}" --}}
     name="{{ $name }}"
     value="{{ old($name, $value) }}"
-    placeholder="{{ $placeholder }}"
     @class([
          'indent-[1.2rem]'=>$icon,
-        'w-full py-2 px-4 rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+        'w-full py-2 px-4 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
         $class
     ])
     @required($required)

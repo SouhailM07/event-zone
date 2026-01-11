@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
     $this->call([
         RoleSeeder::class,
         GlobalDataSeeder::class,
-        CategorySeeder::class
+        CategorySeeder::class,
+        EventSeeder::class
     ]);
         User::factory(20)->create();
     }

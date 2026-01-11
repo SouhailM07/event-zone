@@ -17,8 +17,7 @@ use Illuminate\Http\Request;
 /* start routes */
 /*=============================================================================================*/
 Route::get('/',function(){
-    $events=Event::all();
-    return view('home')->with('events',$events);
+    return view('home');
 })->name("home");
 // 
 Route::get('/event/{id}',function($id){
@@ -30,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events/new',[EventController::class,'create'])->name('events.new');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
     Route::get('/inventory',[EventController::class,'viewInventory']);
+    Route::delete("/inventory",[EventController::class,'destroy'])->name('events.delete');
 });
 // 
 Route::get('/categories',function(){
@@ -60,7 +60,10 @@ Route::put('profile/update', [AuthController::class, 'profileUpdate'])
 /*=============================================================================================*/
 Route::group(["prefix"=>"/admin-panel"],function(){
     Route::view('dashboard',"admin.dashboard-admin");
-    Route::view('events',"admin.events-admin")->name('admin.events');
+    Route::get('events',function(){
+        $events=Event::all();
+        return view("admin.events-admin",compact("events"));
+    })->name('admin.events');
     Route::view("reports","admin.reports-admin")->name('admin.reports');
     Route::get('globals',[GlobalDataController::class,"getGlobalData"])->name('admin.globals');
     Route::put('globals',[GlobalDataController::class,"updateGlobalData"])->name('admin.globals.update');

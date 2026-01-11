@@ -1,4 +1,4 @@
-<header class="bg-white  flex items-center h-[5rem] pr-[1rem]  sticky top-0 ">
+<header class="bg-white  flex items-center h-[5rem] pr-[1rem]  sticky top-0 z-[20]">
 <nav class="flex justify-between items-center w-full gap-[1rem]">
             <img src={{asset("images/logo.png")}} alt="logo" height="120" width="120" class="size-[5rem]  object-fill"/>
     <div class="w-full grid grid-cols-[1fr_12rem] gap-[1rem]">

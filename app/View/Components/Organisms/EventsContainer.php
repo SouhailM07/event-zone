@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Organisms;
 
+use App\Models\Category;
 use App\Models\Event;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -12,11 +13,17 @@ class EventsContainer extends Component
     /**
      * Create a new component instance.
      */
-    public $events;
+    public $eventsByCategory;
     public function __construct()
     {
         //
-        $this->events=Event::all();
+        $categories = Category::all();
+        $this->eventsByCategory = $categories->map(function ($category) {
+            return [
+                'type' => $category->name, // or slug if you prefer
+                'events' => $category->events()->get(), // assuming you have a relation
+            ];
+        })->toArray();
     }
 
     /**
