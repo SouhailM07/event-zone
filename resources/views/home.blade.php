@@ -1,4 +1,4 @@
-<x-templates.home-template title="home" >
+<x-templates.home-template title="home" class="overflow-x-hidden ">
 <div class="flex h-[80vh] gap-3">
                 <div class="w-full">
                     <img src="{{asset('images/auth.jpg')}}" class="h-[80vh] w-full rounded-md"/>
@@ -8,9 +8,9 @@
                                     <x-organisms.live-stats/>
                 </div>
             </div>
-            <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="py-8">
     <!-- Section Title -->
-    <x-organisms.events-container/>
+        <x-organisms.events-container/>
 </div>
 
 </x-templates.home-template>

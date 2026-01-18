@@ -9,25 +9,30 @@ class Event extends Model
 {
     /** @use HasFactory<\Database\Factories\EventFactory> */
     use HasFactory;
-     protected $fillable = [
+
+    protected $fillable = [
         'title',
         'description',
         'thumbnail',
         'location',
         'userId',
         'coordination',
+        'whyRejected',
         'price',
         'quantity',
         'validation',
-        'stated_at',
+        'started_at',
         'end_at',
-        "categoryId"
+        'categoryId',
     ];
 
-    public function categories(){
+    public function categories()
+    {
         return $this->belongsToMany(Category::class);
     }
-    public function user(){
-        return $this->belongsTo(User::class,'userId');
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userId');
     }
 }

@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
         RoleSeeder::class,
         GlobalDataSeeder::class,
         CategorySeeder::class,
+        UserSeeder::class,
         EventSeeder::class
     ]);
-        User::factory(20)->create();
+        
     }
 }

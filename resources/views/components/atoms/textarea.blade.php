@@ -9,13 +9,12 @@
     <textarea
     {{$attributes}} 
     name="{{ $name }}"
-    value="{{ old($name, $value) }}"
     @class([
         "w-full rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500",
         $class
     ])
     @required($required)
-    ></textarea>
+    >{{ old($name, $value) }}</textarea>
 </div>
 @error($name)
     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

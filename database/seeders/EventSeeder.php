@@ -35,7 +35,7 @@ class EventSeeder extends Seeder
                 'price' => $faker->numberBetween(0, 500),
                 'quantity' => $faker->numberBetween(0, 100),
                 'validation' => $faker->randomElement(['pending','rejected','approved']),
-                'stated_at' => $startDate,
+                'started_at' => $startDate,
                 'end_at' => $endDate,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

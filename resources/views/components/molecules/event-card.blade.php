@@ -1,5 +1,5 @@
 @props(["event","type"=>"public"])
-<div class="bg-white relative rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition duration-300">
+<div class="bg-white min-h-full relative rounded-2xl shadow-sm border border-gray-100  hover:shadow-lg transition duration-300">
             <!-- Image -->
             <div class="relative h-52 overflow-hidden rounded-t-2xl">
                 <img
@@ -45,7 +45,7 @@
                     </svg>
 
                     <span>
-                        {{ \Carbon\Carbon::parse($event->stated_at)->format('j M Y') }}
+                        {{ \Carbon\Carbon::parse($event->started_at)->format('j M Y') }}
                         @if($event->end_at)
                             – {{ \Carbon\Carbon::parse($event->end_at)->format('j M Y') }}
                         @endif
@@ -77,15 +77,17 @@
                 </div>
 
                 <!-- CTA -->
-                <a href="{{ route('events.show', $event->id) }}"
-                   class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">
-                {{$type=="public"?"Register":"View"}}
-                </a>
+             <a href="{{ $type === 'public' 
+        ? route('events.show', $event->id) 
+        : route('inventory.show', $event->id) }}"
+   class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">
+    {{ $type === 'public' ? 'Register' : 'View' }}
+</a>
             </div>
             @if($type=="private")
                     <div class="flex gap-2 p-3 ">
 
-                        <a href="#"
+                        <a href="{{route('events.edit',$event->id)}}"
                            class="flex-1 inline-flex items-center justify-center gap-1 px-3 py-2 text-sm rounded-lg bg-indigo-100 text-indigo-700 hover:bg-indigo-200">
                             <x-heroicon-o-pencil-square class="w-4 h-4" />
                             Edit

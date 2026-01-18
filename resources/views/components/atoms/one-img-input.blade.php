@@ -2,12 +2,14 @@
     "name" => "",
     "label" => "",
     "required" => false,
-    "class" => ""
+    "class" => "",
+    "value" => null, // <-- pass existing image URL here
 ])
 
 @php
     $previewId = 'thumbnailPreview_' . $name;
     $iconId = 'thumbnailIcon_' . $name;
+    $hasValue = !empty($value);
 @endphp
 
 <div>
@@ -19,8 +21,15 @@
 
     <div class="flex items-center gap-6">
         <div class="w-32 h-32 rounded-lg border bg-gray-50 flex items-center justify-center overflow-hidden">
-            <img id="{{ $previewId }}" class="hidden w-full h-full object-cover">
-            <x-heroicon-o-photo id="{{ $iconId }}" class="w-10 h-10 text-gray-400"/>
+            <img 
+                id="{{ $previewId }}" 
+                class="{{ $hasValue ? 'block' : 'hidden' }} w-full h-full object-cover" 
+                src="{{ $hasValue ? $value : '' }}"
+            >
+            <x-heroicon-o-photo 
+                id="{{ $iconId }}" 
+                class="{{ $hasValue ? 'hidden' : 'w-10 h-10 text-gray-400' }}"
+            />
         </div>
 
         <input

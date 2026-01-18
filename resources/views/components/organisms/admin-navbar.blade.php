@@ -8,7 +8,7 @@
     scrollbar-width: none;  /* Firefox */
   }
 </style>
-<header id="navContainer" class="sticky bg-white top-0 overflow-x-auto flex gap-4 cursor-grab rounded-xl p-4 select-none">
+<header id="navContainer" class="z-[20] sticky bg-white top-0 overflow-x-auto flex gap-4 cursor-grab rounded-xl p-4 select-none">
   <nav class='flexBetween w-full gap-[2rem]' id="nav">
         <h1 class="text-2xl font-bold min-w-[12rem] text-gray-800 ">
             <x-heroicon-o-shield-check class="w-8 h-8 inline-block text-blue-600 mr-2"/>

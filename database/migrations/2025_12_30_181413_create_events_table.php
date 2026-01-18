@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('location');
             $table->foreignId('userId')->constrained("users")->cascadeOnDelete();
             $table->string('coordination');
+            $table->text('whyRejected')->nullable();
             $table->integer('price')->default(0);
             $table->integer('quantity')->default(0);
             $table->enum('validation',["pending","rejected",'approved']);
-            $table->dateTime('stated_at');
+            $table->dateTime('started_at');
             $table->dateTime('end_at')->nullable();
             $table->timestamps();
         });
