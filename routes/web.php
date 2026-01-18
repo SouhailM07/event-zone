@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GlobalDataController;
 use App\Http\Controllers\GoogleController;
@@ -9,8 +10,6 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Models\Category;
-use App\Models\Event;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,27 +18,13 @@ use Illuminate\Support\Facades\Route;
 /* start routes */
 /* ============================================================================================= */
 Route::view('/', 'home')->name('home');
-//
-Route::get('/event/{id}', function ($id) {
-    $event = Event::where('id', $id)->first();
-
-    return view('view-event-admin-page')->with('event', $event);
-})->name('events.show');
-// Route::view('/events/new','new-event')->middleware(['auth','verified'])->name('events.new');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/events/new', [EventController::class, 'create'])->name('events.new');
-    Route::post('/events', [EventController::class, 'store'])->name('events.store');
-    Route::get('/events/edit/{id}', [EventController::class, 'edit'])->name('events.edit');
-    Route::delete('/inventory', [EventController::class, 'destroy'])->name('events.delete');
+    Route::resource('/events', EventController::class)->names('events');
     Route::resource('/inventory', InventoryController::class)->names('inventory');
 });
 //
-Route::get('/categories', function () {
-    $categories = Category::all();
-
-    return view('categories', compact('categories'));
-});
+Route::resource('/categories', CategoryController::class)->names('categories');
 //
 /* ============================================================================================= */
 // ! email auth routes
@@ -111,7 +96,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 /* password reset routes */
 /* ============================================================================================= */
 Route::middleware('guest')->group(function () {
-
     Route::get('/forgot-password', [PasswordResetController::class, 'create'])
         ->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'store'])

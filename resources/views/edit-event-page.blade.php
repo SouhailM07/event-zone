@@ -24,7 +24,7 @@
     </div>
 
     <!-- Form -->
-    <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data"
+    <form action="{{ route('events.update',$event->id) }}" method="POST" enctype="multipart/form-data"
           class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 space-y-8">
         @csrf
 
@@ -73,22 +73,11 @@
                 </label>
                 <div class="flex gap-2 items-center">
 
-                    <x-atoms.input-radio label=""/>
                     <div class="flex gap-4 mb-2">
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="radio" name="quantity_type" value="infinite" checked>
-                            Infinite
-                        </label>
-                        
-                        <label class="flex items-center gap-2 text-sm">
-                            <input type="radio" name="quantity_type" value="custom">
-                            Custom
-                        </label>
+                    <x-atoms.input-radio label="Infinite" name="quantity_type" value="infinite" checked/>
+                    <x-atoms.input-radio label="Custom" name="quantity_type" value="custom" checked/>
                     </div>
-                    {{-- <x-atoms.input type="number" id="quantity"/> --}}
-                    <input type="number" id="quantity" name="quantity"
-                    class="w-full rounded-lg border-gray-300"
-                    placeholder="Enter quantity">
+                    <x-atoms.input name="quantity" placeholder="Enter quantity" type="number" id="quantity"/>
                 </div>
             </div>
             </div>

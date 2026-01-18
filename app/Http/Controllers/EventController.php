@@ -54,11 +54,10 @@ class EventController extends Controller
             ->with('success', 'Event created successfully!');
     }
 
-    public function destroy(Request $req)
+    public function destroy($id)
     {
         try {
-            $data = $req->validate(['eventId' => 'required']);
-            $event = Event::find($data['eventId']);
+            $event = Event::find($id);
             // ! check for 404
             if (! $event) {
                 return redirect()->back()->with('error', 'Event Not Found !');
@@ -84,5 +83,68 @@ class EventController extends Controller
         }
 
         return view('edit-event-page', compact(['event', 'categories']));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $event = Event::find($id);
+
+        if (! $event) {
+            return redirect()->back()->with('error', 'Event not found!');
+        }
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'thumbnail' => 'nullable|image|max:2048',
+            'location' => 'required|string|max:255',
+            'coordination' => 'required|string',
+            'price' => 'required|integer|min:0',
+            'quantity_type' => 'required|in:infinite,custom',
+            'quantity' => 'nullable|integer|min:0',
+            'started_at' => 'required|date',
+            'end_at' => 'nullable|date|after_or_equal:started_at',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
+        ]);
+
+        $data = $request->only([
+            'title',
+            'description',
+            'location',
+            'coordination',
+            'price',
+            'started_at',
+            'end_at',
+        ]);
+
+        // quantity logic
+        $data['quantity'] = $request->quantity_type === 'infinite'
+            ? 0
+            : $request->quantity;
+
+        if ($request->hasFile('thumbnail')) {
+
+            // delete old thumbnail if exists
+            if ($event->thumbnail) {
+                $oldPath = str_replace('/storage/', '', $event->thumbnail);
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
+            }
+
+            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+            $data['thumbnail'] = '/storage/'.$thumbnailPath;
+        }
+
+        // update event
+        $event->update($data);
+
+        // sync categories (remove old, add new)
+        $event->categories()->sync($request->categories);
+
+        return redirect()
+            ->route('home')
+            ->with('success', 'Event updated successfully!');
     }
 }

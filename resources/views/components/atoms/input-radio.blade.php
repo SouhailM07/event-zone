@@ -6,7 +6,7 @@
     'class' => ''
 ])
 
-<label class="flex items-center gap-2 cursor-pointer">
+<label class="flex items-center gap-2 cursor-pointer text-sm">
     <input
         type="radio"
         name="{{ $name }}"

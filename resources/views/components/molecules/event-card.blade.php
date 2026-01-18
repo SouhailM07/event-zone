@@ -105,7 +105,7 @@
                     <x-slot:footer>
                         <div class="grid grid-cols-2 h-[2.8rem] gap-[2rem]">
                             <button data-modal-hide="delete-event-modal" class="border border-black size-full rounded-2xl">Cancel</button>
-                            <form action="{{route("events.delete")}}" method="POST">
+                            <form action="{{route("events.destroy",$event->id)}}" method="POST">
                                 @csrf
                                 @method("delete")
                                 <input hidden type="text" name="eventId" value={{$event->id}}>
