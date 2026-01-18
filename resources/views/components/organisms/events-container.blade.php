@@ -4,7 +4,7 @@
     <h2 class="text-2xl font-bold text-gray-900 my-6">{{ $category['type'] }}</h2>
     
     <div class="swiper mySwiper ">
-        <div class="swiper-wrapper gap-[1rem] ">
+        <div class="swiper-wrapper gap-[1rem]  min-h-[20rem]">
             @forelse ($category['events'] as $event)
                 <div class="swiper-slide gap-[1rem] h-auto! ">
                     <x-molecules.event-card  :event="$event"/>
@@ -20,5 +20,5 @@
         <div class="swiper-button-prev bg-emerald-400 rounded-full p-2"></div>
     </div>
 @empty
-    <p class="text-gray-500 text-center py-4">No upcoming events available.</p>
+    <div class="text-gray-500 text-center py-4 ">No upcoming events available.</div>
 @endforelse

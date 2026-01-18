@@ -81,7 +81,7 @@
         ? route('events.show', $event->id) 
         : route('inventory.show', $event->id) }}"
    class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">
-    {{ $type === 'public' ? 'Register' : 'View' }}
+    {{ $type === 'public' ? 'Buy' : 'View' }}
 </a>
             </div>
             @if($type=="private")

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 /* start routes */
 /* ============================================================================================= */
 Route::view('/', 'home')->name('home');
+//
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('/events', EventController::class)->names('events');

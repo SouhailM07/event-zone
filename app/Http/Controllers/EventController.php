@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
+    public function show($id)
+    {
+
+        $event = Event::find($id);
+
+        // if(! $event) reerect to 404
+        return view('view-event-page', compact('event'));
+    }
+
     public function create()
     {
         $categories = Category::all();
