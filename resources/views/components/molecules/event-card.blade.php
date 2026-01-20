@@ -25,9 +25,9 @@
                     <h3 class="text-lg font-semibold text-gray-900 leading-tight">
                         {{ $event->title }}
                     </h3>
-                    {{-- @if($type=='private') --}}
+                    @if($type!=='public')
                     <x-atoms.event-status status="{{$event->validation}}"/>
-                    {{-- @endif --}}
+                    @endif
                 </div>
 
                 <div class=" gap-2 w-full flex flex-wrap">

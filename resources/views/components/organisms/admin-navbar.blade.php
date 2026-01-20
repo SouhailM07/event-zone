@@ -17,12 +17,9 @@
     <ul class="flex gap-6 select-none">
         @php
             $navLinks=[
-                ["label"=>'dashboard','link'=>"admin-panel/dashboard","icon"=>"chart-bar-square"],
                 ["label"=>'users','link'=>"admin-panel/users","icon"=>"users"],
                 ["label"=>'events','link'=>"admin-panel/events","icon"=>"rocket-launch"],
-                ["label"=>'reports','link'=>"admin-panel/reports","icon"=>"exclamation-triangle"],
                 ["label"=>'activities logs','link'=>"admin-panel/logs","icon"=>"presentation-chart-line"],
-                ["label"=>'Global Data','link'=>"admin-panel/globals","icon"=>"globe-alt"],
                 ["label"=>'Exit','link'=>"","icon"=>"arrow-right-start-on-rectangle","class"=>"bg-red-500 text-white"]
     ];
             $currentRoute= request()->path();

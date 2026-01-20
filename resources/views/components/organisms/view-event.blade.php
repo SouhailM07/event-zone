@@ -101,16 +101,21 @@
                 </div>
 
                 <!-- Bottom Actions -->
-                <div class="flex flex-wrap gap-4 mt-auto">
-                    @if($event->validation === 'approved')
-                    <button class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium flex items-center gap-2">
-                        <x-heroicon-o-ticket class="w-5 h-5"/> Buy Ticket
-                    </button>
+                <div class="flex justify-end gap-4 mt-auto">
+@if($event->tickets->contains('user_id', auth()->id()))
 
-                    <button class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium flex items-center gap-2">
-                        <x-heroicon-o-heart class="w-5 h-5"/> Favorite
-                    </button>
-                    @endif
+    <button class="text-white bg-emerald-600 p-2 rounded-md font-semibold">You have this ticket</button>
+    
+@else
+    <form action="{{ route('tickets.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="user_id" value="{{ auth()->id() }}" />
+        <input type="hidden" name="event_id" value="{{ $event->id }}" />
+        <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium flex items-center gap-2">
+            <x-heroicon-o-ticket class="w-5 h-5"/> Buy Ticket
+        </button>
+    </form>
+@endif
                 </div>
 
             </div>

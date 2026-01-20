@@ -4,11 +4,11 @@ use App\Http\Controllers\AdminEventController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\GlobalDataController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -23,6 +23,7 @@ Route::view('/', 'home')->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::resource('/events', EventController::class)->names('events');
     Route::resource('/inventory', InventoryController::class)->names('inventory');
+    Route::resource('/tickets', TicketController::class)->names('tickets');
 });
 //
 Route::resource('/categories', CategoryController::class)->names('categories');
@@ -57,9 +58,6 @@ Route::put('profile/update', [AuthController::class, 'profileUpdate'])
 Route::group(['prefix' => '/admin-panel', 'middleware' => ['auth', 'verified']], function () {
     Route::view('dashboard', 'admin.dashboard-admin');
     Route::resource('events', AdminEventController::class)->names('admin.events');
-    Route::view('reports', 'admin.reports-admin')->name('admin.reports');
-    Route::get('globals', [GlobalDataController::class, 'getGlobalData'])->name('admin.globals');
-    Route::put('globals', [GlobalDataController::class, 'updateGlobalData'])->name('admin.globals.update');
     Route::get('users', [UserController::class, 'getUsers'])->name('admin.users');
     Route::put('verify-user', [UserController::class, 'toggleVerifyUser'])->name('verify.user');
     Route::put('ban-user', [UserController::class, 'toggleBanUser'])->name('ban.user');

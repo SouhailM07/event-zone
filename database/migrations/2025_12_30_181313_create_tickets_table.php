@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
+            $table->boolean('used')->default(false);
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
         });
     }
 

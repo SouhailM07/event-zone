@@ -10,6 +10,37 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
+    public function index(Request $req)
+    {
+        $title = $req->title;
+
+        $categories = Category::with(['events' => function ($q) use ($req) {
+            $q->where('validation', 'approved')
+                ->when($req->filled('title'), function ($q) use ($req) {
+                    $q->where('title', 'like', '%'.$req->title.'%');
+                });
+        }])->get();
+
+        // Remove empty categories & add count
+        $eventsByCategory = $categories
+            ->map(fn ($category) => [
+                'type' => $category->name,
+                'events' => $category->events,
+                'count' => $category->events->count(),
+            ])
+            ->filter(fn ($item) => $item['count'] > 0)
+            ->values();
+
+        // Total matching events
+        $totalEvents = $eventsByCategory->sum('count');
+
+        return view('view-events-page', compact(
+            'eventsByCategory',
+            'title',
+            'totalEvents'
+        ));
+    }
+
     public function show($id)
     {
 

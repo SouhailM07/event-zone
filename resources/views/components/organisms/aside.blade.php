@@ -1,9 +1,9 @@
 @php
     $navItems = [
-        ["label" => "Home", "url" => "/", "icon" => "home"],
+        ["label" => "Home", "url" => "", "icon" => "home"],
         ["label" => "Categories", "url" => "categories", "icon" => "tag"],
-        ["label" => "My Tickets", "url" => "profile", "icon" => "ticket"],
-        ["label" => "Fav Events", "url" => "profile", "icon" => "bookmark"],
+        ["label" => "My Tickets", "url" => "tickets", "icon" => "ticket"],
+        // ["label" => "Fav Events", "url" => "profile", "icon" => "bookmark"],
         ["label" => "Inventory", "url" => "inventory", "icon" => "squares-2x2"],
     ];
     $currentRoute = request()->path();
@@ -13,7 +13,7 @@
         <ul class="w-full ">
             @foreach ($navItems as $navItem)
             <li class="relative w-full">
-                <a href="{{ $navItem['url'] }}" @class(["bg-indigo-500 text-white"=>$navItem['url']==$currentRoute,"flex flex-col items-center py-4 hover:bg-gray-200 min-w-full "])>
+                <a href="{{ '/'.$navItem['url'] }}" @class(["bg-indigo-500 text-white"=>$navItem['url']== trim($currentRoute, '/'),"flex flex-col items-center py-4 hover:bg-gray-200 min-w-full "])>
                     <x-dynamic-component :component="'heroicon-o-'.$navItem['icon']" class="w-6 h-6"/>
                     <span class="text-sm text-center">{{$navItem['label']}}</span>
                 </a>

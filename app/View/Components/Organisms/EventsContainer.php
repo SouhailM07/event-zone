@@ -3,7 +3,6 @@
 namespace App\View\Components\Organisms;
 
 use App\Models\Category;
-use App\Models\Event;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -14,6 +13,7 @@ class EventsContainer extends Component
      * Create a new component instance.
      */
     public $eventsByCategory;
+
     public function __construct()
     {
         //
@@ -21,7 +21,7 @@ class EventsContainer extends Component
         $this->eventsByCategory = $categories->map(function ($category) {
             return [
                 'type' => $category->name, // or slug if you prefer
-                'events' => $category->events()->get(), // assuming you have a relation
+                'events' => $category->events()->get()->where('validation', 'approved'), // assuming you have a relation
             ];
         })->toArray();
     }
