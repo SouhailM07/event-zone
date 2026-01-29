@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 /* ============================================================================================= */
 Route::view('/', 'home')->name('home');
 //
-
+Route::view('/support', 'support')->name('support');
 Route::middleware(['auth'])->group(function () {
     Route::resource('/events', EventController::class)->names('events');
     Route::resource('/inventory', InventoryController::class)->names('inventory');

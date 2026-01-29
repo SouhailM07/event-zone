@@ -13,15 +13,20 @@ class EventController extends Controller
     public function index(Request $req)
     {
         $title = $req->title;
+        $selectedCategory = $req->category;
 
-        $categories = Category::with(['events' => function ($q) use ($req) {
-            $q->where('validation', 'approved')
-                ->when($req->filled('title'), function ($q) use ($req) {
-                    $q->where('title', 'like', '%'.$req->title.'%');
-                });
-        }])->get();
+        $categories = Category::query()
+            ->when($selectedCategory, function ($q) use ($selectedCategory) {
+                $q->where('id', $selectedCategory);
+            })
+            ->with(['events' => function ($q) use ($req) {
+                $q->where('validation', 'approved')
+                    ->when($req->filled('title'), function ($q) use ($req) {
+                        $q->where('title', 'like', '%'.$req->title.'%');
+                    });
+            }])
+            ->get();
 
-        // Remove empty categories & add count
         $eventsByCategory = $categories
             ->map(fn ($category) => [
                 'type' => $category->name,
@@ -31,13 +36,13 @@ class EventController extends Controller
             ->filter(fn ($item) => $item['count'] > 0)
             ->values();
 
-        // Total matching events
         $totalEvents = $eventsByCategory->sum('count');
 
         return view('view-events-page', compact(
             'eventsByCategory',
             'title',
-            'totalEvents'
+            'totalEvents',
+            'selectedCategory'
         ));
     }
 

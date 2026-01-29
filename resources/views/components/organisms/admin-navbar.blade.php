@@ -19,7 +19,6 @@
             $navLinks=[
                 ["label"=>'users','link'=>"admin-panel/users","icon"=>"users"],
                 ["label"=>'events','link'=>"admin-panel/events","icon"=>"rocket-launch"],
-                ["label"=>'activities logs','link'=>"admin-panel/logs","icon"=>"presentation-chart-line"],
                 ["label"=>'Exit','link'=>"","icon"=>"arrow-right-start-on-rectangle","class"=>"bg-red-500 text-white"]
     ];
             $currentRoute= request()->path();

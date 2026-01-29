@@ -24,10 +24,6 @@
                         @else
                         <span class="text-red-500 font-medium text-sm">Email Not Verified</span>
                         @endif
-                        <a href="#" class="text-sm bg-gray-300  p-2 rounded">
-                            <x-heroicon-o-clock class="size-[1.2rem] inline-block mr-2"/>
-                            <span>View User History</span>
-                        </a>
                     </div>
                 </div>
                 <div class="my-2 space-y-2  text-sm self-start font-medium ">
