@@ -88,8 +88,7 @@ class EventController extends Controller
         $data['validation'] = 'pending';
 
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $data['thumbnail'] = '/storage/'.$thumbnailPath;
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
         $event = Event::create($data);
@@ -103,19 +102,22 @@ class EventController extends Controller
     {
         try {
             $event = Event::find($id);
-            // ! check for 404
+
             if (! $event) {
-                return redirect()->back()->with('error', 'Event Not Found !');
+                return redirect()->back()->with('error', 'Event Not Found!');
             }
-            // ! delete thumbnail
-            if ($event->thumbnail && Storage::disk('public')->exists($event->thumbnail)) {
+
+            // Delete thumbnail if exists
+            if ($event->thumbnail) {
                 Storage::disk('public')->delete($event->thumbnail);
             }
+
             $event->delete();
 
-            return redirect()->back()->with('success', 'Event Deleted successfully!');
+            return redirect()->back()->with('success', 'Event deleted successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Something went wrong!')->with('errorMsg', $th);
+            return redirect()->back()->with('error', 'Something went wrong!')
+                ->with('errorMsg', $th->getMessage());
         }
     }
 
@@ -163,29 +165,25 @@ class EventController extends Controller
             'end_at',
         ]);
 
-        // quantity logic
+        // Quantity logic
         $data['quantity'] = $request->quantity_type === 'infinite'
             ? 0
             : $request->quantity;
 
+        // Handle thumbnail
         if ($request->hasFile('thumbnail')) {
-
-            // delete old thumbnail if exists
+            // Delete old thumbnail if exists
             if ($event->thumbnail) {
-                $oldPath = str_replace('/storage/', '', $event->thumbnail);
-                if (Storage::disk('public')->exists($oldPath)) {
-                    Storage::disk('public')->delete($oldPath);
-                }
+                Storage::disk('public')->delete($event->thumbnail);
             }
 
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
-            $data['thumbnail'] = '/storage/'.$thumbnailPath;
+            // Store new thumbnail (relative path only)
+            $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
-        // update event
         $event->update($data);
 
-        // sync categories (remove old, add new)
+        // Sync categories
         $event->categories()->sync($request->categories);
 
         return redirect()

@@ -5,7 +5,9 @@
     <!-- Image -->
     <div class="relative h-52 overflow-hidden rounded-t-2xl">
         <img
-            src="{{$event->thumbnail}}"
+        src="{{ Storage::url($event->thumbnail) }}" 
+            {{-- src="{{$event->thumbnail}}" --}}
+
             alt="{{ $event->title }}"
             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
         />
@@ -13,7 +15,7 @@
 
     <!-- Content -->
     <div class="p-5 space-y-3">
-
+<p>{{Storage::url($event->thumbnail) }}</p>
         <!-- Price -->
         <div class="w-full flex justify-end relative">
             <p class="absolute translate-y-[-3rem] bg-emerald-400 font-medium text-black px-4 py-2 rounded-2xl">

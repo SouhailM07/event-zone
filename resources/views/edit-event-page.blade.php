@@ -30,7 +30,7 @@
     <form action="{{ route('events.update',$event->id) }}" method="POST" enctype="multipart/form-data"
           class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 space-y-8">
         @csrf
-
+        @method("PUT")
         <!-- Title -->
         <x-atoms.input
             :value="$event->title"

@@ -50,11 +50,14 @@
             <!-- Left: Event Image -->
             @if($event->thumbnail)
                 <div class="overflow-hidden rounded-xl shadow-inner">
-                    <img src="{{ asset('storage/' . $event->thumbnail) }}" alt="{{ $event->title }}"
+                    <img 
+        src="{{ Storage::url($event->thumbnail) }}" 
+ alt="{{ $event->title }}"
                          class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
                 </div>
             @endif
 
+{{-- <p>{{Storage::url($event->thumbnail) }}</p> --}}
             <!-- Right: Event Details + Badges + Actions -->
             <div class="flex flex-col justify-between space-y-6">
 
