@@ -39,7 +39,7 @@
                     <a href="{{ route('register') }}">{{ __('navbar.register') }}</a>
                 </li>
                 <li>
-                    <a href="{{ route('login') }}" class="bg-indigo-500 text-white p-4 rounded-lg hover:bg-indigo-600">{{ __('navbar.login') }}</a>
+                    <a href="{{ route('login') }}" class="whitespace-nowrap bg-indigo-500 text-white p-4 rounded-lg hover:bg-indigo-600">{{ __('navbar.login') }}</a>
                 </li>
             @endguest
         </ul>
