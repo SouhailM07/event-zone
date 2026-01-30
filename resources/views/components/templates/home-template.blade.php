@@ -1,6 +1,6 @@
 @props(['title'=>"home","class"=>""])
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{app()->getLocale()}}">
 <head>
     <x-atoms.metall title="{{$title}}"/>
     <x-atoms.tailwindcss/>

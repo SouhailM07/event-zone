@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{app()->getLocale()}}">
 <head>
     <x-atoms.metall title="Auth"/>
     <x-atoms.tailwindcss/>

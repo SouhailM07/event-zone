@@ -12,7 +12,9 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /* ============================================================================================= */
 /* start routes */
@@ -24,6 +26,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/events', EventController::class)->names('events');
     Route::resource('/inventory', InventoryController::class)->names('inventory');
     Route::resource('/tickets', TicketController::class)->names('tickets');
+});
+//
+Route::get('/lang/{locale}', function ($lang) {
+    if (in_array($lang, ['en', 'fr', 'ar'])) {
+        App::setLocale($lang);
+        Session::put('locale', $lang);
+    }
+
+    return back();
 });
 //
 Route::resource('/categories', CategoryController::class)->names('categories');

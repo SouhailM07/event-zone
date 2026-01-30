@@ -108,7 +108,7 @@ class EventController extends Controller
                 return redirect()->back()->with('error', 'Event Not Found !');
             }
             // ! delete thumbnail
-            if ($event->thumbnail && Storage::disk('public')->exist($event->thumbnail)) {
+            if ($event->thumbnail && Storage::disk('public')->exists($event->thumbnail)) {
                 Storage::disk('public')->delete($event->thumbnail);
             }
             $event->delete();

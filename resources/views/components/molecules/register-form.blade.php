@@ -2,49 +2,49 @@
 $inputs = [
     [
         "icon" => "tag",
-        "label" => "Name",
         "type" => "text",
         "name" => "name",
         "required" => true,
-        "placeholder" => "Your Name",
+        "label" => __('register.inputs.name.label'),
+        "placeholder" => __('register.inputs.name.placeholder'),
         "old"=>true
     ],
     [
         "icon" => "envelope",
-        "label" => "Email",
         "type" => "email",
         "name" => "email",
         "required" => true,
-        "placeholder" => "Your Email"
+        "label" => __('register.inputs.email.label'),
+        "placeholder" => __('register.inputs.email.placeholder')
     ],
     [
         "icon" => "lock-closed",
-        "label" => "Password",
         "type" => "password",
         "name" => "password",
         "required" => true,
-        "placeholder" => "Your Password"
+        "label" => __('register.inputs.password.label'),
+        "placeholder" => __('register.inputs.password.placeholder')
     ],
     [
         "icon" => "lock-closed",
-        "label" => "Confirm Password",
         "type" => "password",
         "name" => "password_confirmation",
         "required" => true,
-        "placeholder" => "Confirm Your Password"
+        "label" => __('register.inputs.password_confirmation.label'),
+        "placeholder" => __('register.inputs.password_confirmation.placeholder')
     ]
 ];
-
 @endphp
+
 <h2 class="text-2xl font-bold text-gray-800">
-Register Now!
+    {{ __('register.title') }}
 </h2>
 <p class="text-sm text-gray-500 mt-1">
-Welcome back! Please enter your details.
+    {{ __('register.subtitle') }}
 </p>
+
 <form class="mt-6 space-y-5" method="POST" action="{{ route('register') }}">
-@csrf
-<!-- EMAIL -->
+    @csrf
     @foreach ($inputs as $input)
         <x-atoms.input
             :icon="$input['icon']"
@@ -55,16 +55,18 @@ Welcome back! Please enter your details.
             :placeholder="$input['placeholder']"
         />
     @endforeach
-                        <button
-                        type="submit"
-                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 rounded-lg transition"
-                    >
-                        Register in →
-                    </button>
-                                        <!-- SIGN UP -->
-                    <p class="text-center text-sm text-gray-500">
-                        Have an account?
-                        <a href="/login" class="text-blue-600 font-medium hover:underline">
-                            Sign In
-                        </a>
-                    </p>
+
+    <button
+        type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 rounded-lg transition"
+    >
+        {{ __('register.submit') }} →
+    </button>
+
+    <p class="text-center text-sm text-gray-500">
+        {{ __('register.signin_text') }}
+        <a href="{{ route('login') }}" class="text-blue-600 font-medium hover:underline">
+            {{ __('register.signin_link') }}
+        </a>
+    </p>
+</form>

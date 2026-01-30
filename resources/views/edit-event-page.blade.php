@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
-    <x-atoms.metall title="New Event"/>
+    <x-atoms.metall :title="__('edit-event.page_title')"/>
     <x-atoms.tailwindcss/>
 </head>
 <body>
@@ -13,12 +13,15 @@
             <a href="{{route('inventory.index')}}"
                class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2">
                 <x-heroicon-o-arrow-left class="w-4 h-4"/>
-                Back to inventory
+                {{ __('edit-event.back_inventory') }}
             </a>
 
-            <h1 class="text-2xl font-bold text-gray-900">Edit Event</h1>
+            <h1 class="text-2xl font-bold text-gray-900">
+                {{ __('edit-event.edit_event') }}
+            </h1>
+
             <p class="text-sm text-gray-500 mt-1">
-                Edit event and publish it for users
+                {{ __('edit-event.subtitle') }}
             </p>
         </div>
     </div>
@@ -29,105 +32,115 @@
         @csrf
 
         <!-- Title -->
-        <x-atoms.input :value="$event->title" label="Event Title" name="title" placeholder="Music Festival 2024" />
-        <!-- Category -->
-<div>
-    <label class="block text-sm font-medium text-gray-700 mb-2">
-        Event Categories
-    </label>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        @foreach($categories as $category)
-            <label class="flex items-center gap-2">
-                <input type="checkbox" 
-                       name="categories[]" 
-                       value="{{ $category->id }}"
-                       {{$event->categories->contains('id',$category->id) ? "checked" :""  }}
-                       class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                <span class="text-gray-700">{{ $category->name }}</span>
-            </label>
-        @endforeach
-    </div>
+        <x-atoms.input
+            :value="$event->title"
+            :label="__('edit-event.event_title')"
+            name="title"
+            :placeholder="__('edit-event.title_placeholder')" />
 
-    @error('categories')
-        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
+        <!-- Category -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                {{ __('edit-event.categories') }}
+            </label>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                @foreach($categories as $category)
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox"
+                               name="categories[]"
+                               value="{{ $category->id }}"
+                               {{$event->categories->contains('id',$category->id) ? "checked" :""}}
+                               class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                        <span class="text-gray-700">{{ $category->name }}</span>
+                    </label>
+                @endforeach
+            </div>
+        </div>
 
         <!-- Description -->
-       <x-atoms.textarea :value="$event->description" name="description" rows="4" placeholder="Describe your event..." label="Description" /> 
+        <x-atoms.textarea
+            :value="$event->description"
+            name="description"
+            rows="4"
+            :placeholder="__('edit-event.description_placeholder')"
+            :label="__('edit-event.description')" />
+
         <!-- Thumbnail -->
-        <x-atoms.one-img-input :value="$event->thumbnail" name="thumbnail" label="Event Thumbnail" id="thumbnailPreview"/>
+        <x-atoms.one-img-input
+            :value="$event->thumbnail"
+            name="thumbnail"
+            :label="__('edit-event.thumbnail')"
+            id="thumbnailPreview"/>
+
         <div class="grid grid-cols-2 gap-6">
-            <x-atoms.input :value="$event->location" name="location"  label="Location" placeholder="Algiers, Algeria" />
-            <x-atoms.input :value="$event->coordination" name="coordination"  label="Coordination" placeholder="36.7538, 3.0588" />
+            <x-atoms.input :value="$event->location" name="location"
+                :label="__('edit-event.location')" />
+
+            <x-atoms.input :value="$event->coordination" name="coordination"
+                :label="__('edit-event.coordination')" />
         </div>
 
         <!-- Pricing & Quantity -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Price -->
-            <x-atoms.input :value="$event->price" name="price" type="number"  label="Price (DA)" />
-            <!-- Quantity -->
+
+            <x-atoms.input :value="$event->price" name="price" type="number"
+                :label="__('edit-event.price')" id="price"/>
+
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Tickets Quantity
+                    {{ __('edit-event.tickets_quantity') }}
                 </label>
-                <div class="flex gap-2 items-center">
 
-                    <div class="flex gap-4 mb-2">
-                    <x-atoms.input-radio label="Infinite" name="quantity_type" value="infinite" checked/>
-                    <x-atoms.input-radio label="Custom" name="quantity_type" value="custom" checked/>
-                    </div>
-                    <x-atoms.input name="quantity" placeholder="Enter quantity" type="number" id="quantity"/>
+                <div class="flex gap-4 mb-2">
+                    <x-atoms.input-radio
+                        :label="__('edit-event.infinite')"
+                        name="quantity_type"
+                        value="infinite" checked/>
+
+                    <x-atoms.input-radio
+                        :label="__('edit-event.custom')"
+                        name="quantity_type"
+                        value="custom"/>
                 </div>
+
+                <x-atoms.input
+                    name="quantity"
+                    :placeholder="__('edit-event.quantity_placeholder')"
+                    type="number"
+                    id="quantity"/>
             </div>
-            </div>
+        </div>
 
         <!-- Dates -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <x-atoms.input :value="$event->started_at" type='datetime-local' name='started_at' label="Start Date & Time"/>
-            <x-atoms.input :value="$event->end_at" type='datetime-local' name='end_at' label="End Date & Time (Optional)" />
+            <x-atoms.input :value="$event->started_at" type='datetime-local'
+                name='started_at'
+                :label="__('edit-event.start_date')" />
+
+            <x-atoms.input :value="$event->end_at" type='datetime-local'
+                name='end_at'
+                :label="__('edit-event.end_date')" />
         </div>
 
         <input type="hidden" name="validation" value="pending">
 
         <!-- Submit -->
         <div class="flex justify-end gap-4 pt-6 border-t">
+
             <button type="reset"
                     class="px-5 py-2 rounded-lg border text-gray-600 hover:bg-gray-100">
-                Reset
+                {{ __('edit-event.reset') }}
             </button>
 
             <button type="submit"
                     class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-2">
                 <x-heroicon-o-plus class="w-5 h-5"/>
-                Update Event
+                {{ __('edit-event.update_event') }}
             </button>
+
         </div>
     </form>
 </div>
-
-<!-- JS -->
-<script>
-    const priceInput = document.getElementById('price');
-    const quantityInput = document.getElementById('quantity');
-    const radios = document.querySelectorAll('input[name="quantity_type"]');
-
-    function updateQuantity() {
-        const price = parseFloat(priceInput.value) || 0;
-        const type = document.querySelector('input[name="quantity_type"]:checked').value;
-
-        if (price === 0 || type === 'infinite') {
-            quantityInput.value = 0;
-            quantityInput.disabled = true;
-        } else {
-            quantityInput.disabled = false;
-        }
-    }
-
-    priceInput.addEventListener('input', updateQuantity);
-    radios.forEach(r => r.addEventListener('change', updateQuantity));
-    updateQuantity();
-</script>
-
 </body>
 </html>

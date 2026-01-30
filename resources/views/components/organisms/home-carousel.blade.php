@@ -10,7 +10,7 @@
                 
                 {{-- Background image --}}
                 <img
-                    src="{{ asset('storage/'.$event->thumbnail) }}"
+                    src="{{ $event->thumbnail }}"
                     class="absolute inset-0 w-full h-full object-cover"
                     alt="{{ $event->title }}"
                 />
