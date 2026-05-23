@@ -3,12 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Models\User;
+use Carbon\Carbon;
+use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class EventSeeder extends Seeder
 {
@@ -16,25 +17,31 @@ class EventSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-{
+    {
         $faker = Faker::create();
         $userIds = User::pluck('id')->toArray();
         $categoryIds = Category::pluck('id')->toArray();
 
-        for ($i = 0; $i < 20; $i++) {
+        $defaultImagePath = public_path('images/auth.jpg'); // path to your default image
+
+        for ($i = 0; $i < 7; $i++) {
             $startDate = $faker->dateTimeBetween('-1 month', '+1 month');
             $endDate = $faker->boolean(70) ? $faker->dateTimeBetween($startDate, '+2 months') : null;
+
+            // Copy default image to storage with a unique name
+            $thumbnailName = 'thumbnails/'.Str::random(20).'.jpg';
+            Storage::disk('public')->putFileAs('thumbnails', $defaultImagePath, basename($thumbnailName));
 
             $eventId = DB::table('events')->insertGetId([
                 'title' => $faker->sentence(3),
                 'description' => $faker->paragraph,
-                'thumbnail' => '/images/auth.jpg',
+                'thumbnail' => $thumbnailName, // use storage path
                 'location' => $faker->city,
                 'userId' => $faker->randomElement($userIds),
-                'coordination' => $faker->latitude . ',' . $faker->longitude,
+                'coordination' => $faker->latitude.','.$faker->longitude,
                 'price' => $faker->numberBetween(0, 500),
                 'quantity' => $faker->numberBetween(0, 100),
-                'validation' => $faker->randomElement(['pending','rejected','approved']),
+                'validation' => $faker->randomElement(['pending', 'rejected', 'approved']),
                 'started_at' => $startDate,
                 'end_at' => $endDate,
                 'created_at' => Carbon::now(),

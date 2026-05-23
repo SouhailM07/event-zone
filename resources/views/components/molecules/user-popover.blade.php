@@ -2,7 +2,7 @@
     <button data-popover-target="popover-default" type="button">
         <img 
             src="{{ auth()->user()->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}"
-            class="min-w-[3.4rem] aspect-square p-2 bg-gray-200 rounded-full" alt="avatar"/>
+            class="min-w-[3.4rem] h-[3.4rem] p-2 bg-gray-200 rounded-full" alt="avatar"/>
     </button>
 
     <div data-popover id="popover-default" role="tooltip" class="absolute z-10 invisible inline-block w-72 text-sm text-body transition-opacity duration-300 bg-neutral-primary-soft border border-default rounded-base shadow-xs opacity-0">

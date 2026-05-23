@@ -2,7 +2,7 @@
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
 />
-<div class="swiper homeSwiper h-[80vh] rounded-xl overflow-hidden">
+<div class="swiper w-full homeSwiper h-[80vh] rounded-xl overflow-hidden">
     <div class="swiper-wrapper">
 
         @forelse($events as $event)
@@ -10,7 +10,7 @@
                 
                 {{-- Background image --}}
                 <img
-                    src="{{ $event->thumbnail }}"
+                    src="{{asset('storage/'.$event->thumbnail) }}"
                     class="absolute inset-0 w-full h-full object-cover"
                     alt="{{ $event->title }}"
                 />

@@ -12,17 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
-            $table->string("title");
+            $table->string('title');
             $table->text('description');
-            $table->string("thumbnail")->default('');
+            $table->string('thumbnail')->default('thumbnails/thumbnail.jpg');
             $table->string('location');
-            $table->foreignId('userId')->constrained("users")->cascadeOnDelete();
+            $table->unsignedBigInteger('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->string('coordination');
             $table->text('whyRejected')->nullable();
             $table->integer('price')->default(0);
             $table->integer('quantity')->default(0);
-            $table->enum('validation',["pending","rejected",'approved']);
+            $table->enum('validation', ['pending', 'rejected', 'approved']);
             $table->dateTime('started_at');
             $table->dateTime('end_at')->nullable();
             $table->timestamps();

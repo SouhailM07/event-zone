@@ -74,7 +74,7 @@ class EventController extends Controller
             'quantity_type' => 'required|in:infinite,custom',
             'quantity' => 'nullable|integer|min:0',
             'started_at' => 'required|date',
-            'end_at' => 'nullable|date|after_or_equal:stated_at',
+            'end_at' => 'nullable|date|after_or_equal:started_at',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
         ]);

@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = 'InnoDB'; // must be InnoDB
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -19,9 +20,13 @@ return new class extends Migration
             $table->boolean('account_verified')->default(false);
             $table->boolean('oauth')->default(false);
             $table->string('oauth_provider')->nullable();
-            $table->string("avatar")->default('/images/default-avatar.png');
+            $table->string('avatar')->default('/images/default-avatar.png');
             $table->string('password');
-            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+
+            // Safe FK declaration
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+
             $table->boolean('is_banned')->default(false);
             $table->rememberToken();
             $table->timestamps();
