@@ -1,6 +1,8 @@
 FROM php:8.3-cli
 
-# system deps
+# =========================
+# System dependencies
+# =========================
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
@@ -11,25 +13,50 @@ RUN apt-get update && apt-get install -y \
     zip \
     libzip-dev
 
-# install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
+# =========================
+# PHP extensions
+# =========================
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    zip \
+    exif \
+    pcntl
 
-# install composer
+# =========================
+# Composer
+# =========================
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# =========================
+# App directory
+# =========================
 WORKDIR /app
 
-# copy project
+# =========================
+# Copy project
+# =========================
 COPY . .
 
-# install dependencies
+# =========================
+# Install dependencies
+# =========================
 RUN composer install --no-dev --optimize-autoloader
 
-# permissions (important for Laravel)
+# =========================
+# Permissions (Laravel needs this)
+# =========================
 RUN chmod -R 775 storage bootstrap/cache
 
-# expose port Render uses
+# =========================
+# Startup script
+# =========================
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Render uses this port
 EXPOSE 10000
 
-# start server
-CMD php artisan serve --host=0.0.0.0 --port=10000
+# Start app
+CMD ["/start.sh"]
