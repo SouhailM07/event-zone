@@ -14,6 +14,12 @@ RUN apt-get update && apt-get install -y \
     libzip-dev
 
 # =========================
+# Node.js (IMPORTANT for Blade/Vite)
+# =========================
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# =========================
 # PHP extensions
 # =========================
 RUN docker-php-ext-install \
@@ -35,16 +41,26 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-# Install dependencies
+# =========================
+# Install PHP deps
+# =========================
 RUN composer install --no-dev --optimize-autoloader
 
+# =========================
+# Install JS deps + build assets (THIS FIXES YOUR UI)
+# =========================
+RUN npm install
+RUN npm run build
+
+# =========================
 # Permissions
+# =========================
 RUN chmod -R 775 storage bootstrap/cache
 
 # Render port
 EXPOSE 10000
 
 # =========================
-# Start command (ALL-IN-ONE)
+# Start Laravel
 # =========================
 CMD sh -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000"
