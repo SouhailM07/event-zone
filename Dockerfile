@@ -30,33 +30,24 @@ RUN docker-php-ext-install \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # =========================
-# App directory
+# App setup
 # =========================
 WORKDIR /app
-
-# =========================
-# Copy project
-# =========================
 COPY . .
 
-# =========================
 # Install dependencies
-# =========================
 RUN composer install --no-dev --optimize-autoloader
 
-# =========================
-# Permissions (Laravel needs this)
-# =========================
+# Permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# =========================
-# Startup script
-# =========================
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Render uses this port
+# Render port
 EXPOSE 10000
 
-# Start app
-CMD ["/start.sh"]
+# =========================
+# Start command (ALL-IN-ONE)
+# =========================
+CMD sh -c "php artisan config:clear && \
+php artisan cache:clear && \
+php artisan migrate --force && \
+php artisan serve --host=0.0.0.0 --port=10000"
